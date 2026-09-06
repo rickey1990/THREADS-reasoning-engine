@@ -1,0 +1,20 @@
+THREADS DOCUMENTATION LICENCE
+=============================
+
+THREADS documentation, explanatory text, figures, tables, and other
+copyrightable presentation are licensed under:
+
+    Creative Commons Attribution-NonCommercial 4.0 International
+    (CC BY-NC 4.0)
+
+Licence page:
+    https://creativecommons.org/licenses/by-nc/4.0/
+
+Legal code:
+    https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+This is a noncommercial documentation licence. The official terms at the URLs
+above are the governing licence terms.
+
+Commercial licensing enquiries:
+    rickeyernest1990@gmail.com
