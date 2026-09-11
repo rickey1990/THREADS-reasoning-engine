@@ -3,15 +3,76 @@ name: Tests
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
-  quick:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -r requirements.txt
+      - run: python -m pip install -e ./source
+      - run: test -f source/srmh/engine.py
+      - run: test -f source/tests/test_core.py
+      - run: test -f benchmarks/micro60_suite.py
+      - run: sha256sum -c SHA256SUMS.txt
+
+  quick:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
       - run: python THREADS_test_runner.py
+
+  regression:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - run: python THREADS_test_runner.py --regression
+
+  micro60:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - run: python THREADS_test_runner.py --micro60
+
+  applied:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - run: python THREADS_test_runner.py --applied
+
+  paper10:
+    if: github.event_name == 'workflow_dispatch'
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - run: python THREADS_test_runner.py --paper10

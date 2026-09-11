@@ -245,7 +245,9 @@ def main():
         if r['failures']:
             print('  first failure:', r['failures'][0])
     out={'seed':SEED,'engine_source':str(ROOT),'results':results,'total_checks':sum(r['checks'] for r in results),'total_passed':sum(r['passed'] for r in results),'elapsed_s':time.perf_counter()-total0}
-    (Path(__file__).resolve().parents[1] / 'results' / 'applied10' / 'applied10_reproduced.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
+    out_dir = Path(__file__).resolve().parents[1] / 'results' / 'applied10'
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / 'applied10_reproduced.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
     return 0 if out['total_checks']==out['total_passed'] else 1
 
 if __name__=='__main__': raise SystemExit(main())

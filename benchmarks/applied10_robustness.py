@@ -180,6 +180,8 @@ def main():
         d['failed']=d['checks']-d['passed'];d['pass_rate']=d['passed']/d['checks'];results.append({'name':name,**d});print(f"{name}: {d['passed']}/{d['checks']}")
         if d['failures']:print(' first:',d['failures'][0])
     out={'seeds':SEEDS,'results':results,'checks':sum(x['checks'] for x in results),'passed':sum(x['passed'] for x in results),'elapsed_s':time.perf_counter()-t}
-    (Path(__file__).resolve().parents[1] / 'results' / 'applied10' / 'applied10_robustness_reproduced.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
+    out_dir = Path(__file__).resolve().parents[1] / 'results' / 'applied10'
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / 'applied10_robustness_reproduced.json').write_text(json.dumps(out,indent=2),encoding='utf-8')
     return 0 if out['checks']==out['passed'] else 1
 if __name__=='__main__':raise SystemExit(main())

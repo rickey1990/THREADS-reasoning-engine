@@ -55,6 +55,21 @@ THREADS receives the structured facts/events/constraints and the requested opera
 
 The Python package is still named `srmh` to preserve the tested source snapshot and benchmark history. The research project is published as **THREADS**.
 
+## Installation and COUNT semantics
+
+Install the package in editable mode with:
+
+```bash
+python -m pip install -e ./source
+```
+
+`Graph` is an explicit multigraph, so `COUNT` counts parallel edge witnesses.
+`Engine` and `Ledger` store observations of logical transitions; `Engine` COUNT
+counts each distinct positive subject/relation/object transition once. Repeated
+or independently lineaged observations therefore do not manufacture additional
+engine edges. This preserves the evidence-copy policy used by the regression
+suite and is intentionally different from `Graph` COUNT.
+
 ## Licensing
 
 This repository uses a split noncommercial licence. See `LICENSING.md`, `LICENSE-CODE.txt`, and `LICENSE-DOCUMENTATION.txt` before reuse.
