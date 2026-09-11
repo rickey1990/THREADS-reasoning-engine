@@ -157,6 +157,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Generated benchmark output
+results/
+
 # Spyder project settings
 .spyderproject
 .spyproject
